@@ -56,6 +56,7 @@ setInterval(() => {
 
 // PUSH BACK FUNCTIONS ---------------------------------------------------------
 function addNodeAtEnd() {
+    disableEverything();
     state = "push_back";
     data = document.getElementById("data").value;
     instructions = ["create node", "linking node"];
@@ -78,7 +79,7 @@ function actualizePushBack() {
         //pushear nuevo nodo, dejar de dibujarlo y desplazar todos los nodos a la izquierda
         nodes.push(newNode);
         newNode = null;
-
+        enableEverything();
     }
 }
 
@@ -87,6 +88,7 @@ function actualizePushBack() {
 
 // POP BACK FUNCTIONS ----------------------------------------------------------
 function addNodeAtBeginning() {
+    disableEverything();
     state = "push_front";
     data = document.getElementById("data").value;
     instructions = ["create node", "linking node"];
@@ -111,6 +113,7 @@ function actualizePushFront() {
         //pushear nuevo nodo, dejar de dibujarlo y desplazar todos los nodos a la derecha
         nodes.unshift(newNode);
         newNode = null;
+        enableEverything();
     }
 }
 
@@ -118,6 +121,7 @@ function actualizePushFront() {
 
 // POP BACK FUNCTIONS ----------------------------------------------------------
 function removeNodeAtEnd() {
+    disableEverything();
     state = "pop_back";
     instructions = ["unlinking node", "delete node"];
     instructionSet.innerHTML = "";
@@ -134,6 +138,7 @@ function actualizePopBack() {
     } else if (currentInstruction === 1) {
         //borrar nodo
         newNode = null;
+        enableEverything();
     }
 }
 
@@ -141,6 +146,7 @@ function actualizePopBack() {
 
 // POP FRONT FUNCTIONS ---------------------------------------------------------
 function removeNodeAtBeginning() {
+    disableEverything();
     state = "pop_front";
     instructions = ["unlinking node", "delete node"];
     instructionSet.innerHTML = "";
@@ -158,12 +164,14 @@ function actualizePopFront() {
         //borrar nodo
         newNode = null;
         moveEveryNode(-100, 0, nodes);
+        enableEverything();
     }
 }
 
 
 // SEARCH FUNCTIONS ------------------------------------------------------------
 function searchNode() {
+    disableEverything();
     state = "search";
     founded = false;
     data = document.getElementById("data").value;
@@ -192,6 +200,7 @@ function actualizeSearch() {
         //no se encontro el nodo
         focusCircle = null;
         founded = false;
+        enableEverything();
     } else {
         //se encontro el nodo
         instructions = instructions.slice(0, currentInstruction);
@@ -203,6 +212,7 @@ function actualizeSearch() {
         }
         focusCircle = null;
         founded = true;
+        enableEverything();
     }
 }
 
@@ -210,6 +220,7 @@ function actualizeSearch() {
 
 // DELETE FUNCTIONS ------------------------------------------------------------
 function deleteNode() {
+    disableEverything();
     state = "delete";
     founded = false;
     data = document.getElementById("data").value;
@@ -240,6 +251,7 @@ function actualizeDelete() {
             //no se encontro el nodo
             focusCircle = null;
             founded = false;
+            enableEverything();
         } else {
             //se encontro el nodo
             instructions = instructions.slice(0, currentInstruction);
@@ -268,6 +280,7 @@ function actualizeDelete() {
             newNode = null;
             moveEveryNode(-100, 0, nodesHelper);
             nodes = nodes.concat(nodesHelper);
+            enableEverything();
         }
     }
 }
@@ -375,6 +388,20 @@ function drawFocusCircle(color="red") {
         ctx.arc(focusCircle.x, focusCircle.y, radius, 0, 2 * Math.PI);
         ctx.stroke();
         ctx.closePath();
+    }
+}
+
+function disableEverything() {
+    list = document.getElementsByTagName("button");
+    for (let i = 0; i < list.length; i++) {
+        list[i].disabled = true;
+    }
+}
+
+function enableEverything() {
+    list = document.getElementsByTagName("button");
+    for (let i = 0; i < list.length; i++) {
+        list[i].disabled = false;
     }
 }
 

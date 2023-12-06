@@ -4,158 +4,229 @@
     <meta charset="UTF-8">
     <title>Linked List</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+        /* Reset de estilos y configuraciones iniciales */
+body {
+    margin: 0;
+    padding: 0;
+}
 
-        header {
-            background-image: linear-gradient(74deg, #181818 0%, #1e1e28 74%);
-            color: #fff;
-        }
+/* Estilo general para el cuerpo de la página */
+body {
+    font-family: 'Arial', Helvetica, sans-serif;
+    line-height: 1.6;
+    background-color: #f2f2f2;
+}
 
-        .presentation {
-            padding: 20px;
-            width: 100%;
-            margin: 0 auto;
-        }
+/* Estilo para el encabezado */
+header {
+    background: linear-gradient(74deg, #181818 0%, #1e1e28 74%);
+    color: #fff;
+    padding: 20px 0;
+}
 
-        .presentation h1 {
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
+/* Estilo para la presentación en el encabezado */
+.presentation {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
 
-        .bar {
-            background-color: #fff;
-            width: 100%;
-            margin-top: 20px;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+/* Estilo para el título h1 */
+.presentation h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
 
-        .bar label {
-            margin-right: 10px;
-            color: #333;
-        }
+/* Estilo para el párrafo de la presentación */
+.presentation p {
+    font-size: 16px;
+    color: #ccc;
+}
 
-        .bar input {
-            padding: 5px;
-            margin-right: 10px;
-        }
+/* Estilo para la barra de herramientas */
+.bar {
+    background-color: #fff;
+    margin-top: 20px;
+    padding: 10px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        .bar button {
-            padding: 5px;
-            margin-right: 10px;
-            background-color: #fff;
-            border: 1px solid #333;
-            color: #333;
-            cursor: pointer;
-        }
+.bar label {
+    margin-right: 10px;
+    color: #333;
+}
 
-        .bar button:hover {
-            background-color: #333;
-            color: #fff;
-        }
+.bar input,
+.bar button {
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #575757;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.15s ease, color 0.3s ease;
+}
 
-        .bar button:active {
-            background-color: #333;
-            color: #fff;
-        }
+.bar button:disabled {
+    cursor: not-allowed;
+    background-color: #ccc;
+    color: #fff;
+}
 
-        .bar button:focus {
-            outline: none;
-        }
+.bar button:hover:disabled {
+    background-color: #ccc;
+    color: #fff;
+}
 
-        .bar button:disabled {
-            background-color: #ccc;
-            color: #fff;
-            cursor: not-allowed;
-        }
+.bar button:active {
+    transform: scale(0.95);
+    transition: all 0.15s ease-in-out;
+}
 
-        .main {
-            width: 100%;
-            margin: 0 auto;
-            padding: 20px;
-            display: flex;
-            padding-right: 0px;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            flex-direction: column;
-            padding-right: 320px;
-        }
+.bar button {
+    background-color: #fff;
+    color: #333;
+    transition: all 0.15s ease, color 0.3s ease;
+}
 
-        #canvas {
-            border: 1px solid #575757;
-            border-radius: 5px;
-        }
+.bar button:hover {
+    background-color: #333;
+    transition: all 0.15s ease-in-out;
+    color: #fff;
+}
 
-        .main .instructions-set {
-            width: 300px;
-            height: 400px;
-            position: absolute;
-            top: 110px;
-            right: 30px;
-            border-radius: 5px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-            overflow-x: hidden;
+/* Estilo para la sección principal */
+.main {
+    max-width: 1200px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 30px;
+}
+/* Estilo para el contenedor de instrucciones */
+.instructions-set {
+    width: 300px;
+    height: 400px;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    overflow-x: hidden;
+    font-family: monospace;
+    font-size: 14px;
+    overflow-y: scroll;
+    background-color: #242323;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
 
-            /* code style */
-            font-family: monospace;
-            font-size: 14px;
-            overflow-y: scroll;
-            background-color: #242323;
+/* Estilo para las líneas de código en el contenedor de instrucciones */
+.instructions-set p {
+    margin-bottom: 10px;
+    padding: 7px;
+    border-radius: 5px;
+    background-color: #2c2c2f;
+    color: #fff;
+    transition: background-color 0.2s ease-in-out;
+}
 
-            /* hide scroll bar */
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+.instructions-set p:hover {
+    background-color: #353538;
+}
 
-        }
+/* Estilo para la línea de código actual en el contenedor de instrucciones */
+.instructions-set p.current {
+    background-color: #434349;
+    transition: background-color 0.2s ease-in-out;
+}
 
-        .main .instructions-set p {
-            /* code line style */
-            margin-bottom: 10px;
-            padding: 7px;
-            border-radius: 5px;
-            background-color: #2c2c2f;
-            color: #fff;
-            transition: background-color 0.2s ease-in-out;
-        }
+/* Estilo para ocultar líneas de código */
+p.hide {
+    background: rgba(0, 0, 0, 0);
+    color: rgba(0, 0, 0, 0);
+    animation: hide 1s ease-in-out;
+    transform: translateX(100%);
+    opacity: 0;
+}
 
-        .main .instructions-set p:hover {
-            background-color: #353538;
-        }
+/* Animación para ocultar líneas de código */
+@keyframes hide {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
 
-        /* los que tengan clase current */
-        .main .instructions-set p.current {
-            background-color: #434349;
-            transition: background-color 0.2s ease-in-out;
-        }
-
-        p.hide {
-            background: rgba(0,0,0,0);
-            color: rgba(0,0,0,0);
-            animation: hide 1s ease-in-out;
-            transform: translateX(100%);
-            opacity: 0;
-        }
+#canvas {
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    overflow: hidden;
+    cursor: pointer;
+    margin-top: 10px;
+}
 
 
-        @keyframes hide {
-            0% {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            100% {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-        }
+/*resopnsive*/
+@media screen and (max-width: 768px) {
+    .main {
+        flex-direction: column;
+    }
+
+    .instructions-set {
+        width: 500px;
+        height: 200px;
+    }
+
+    #canvas {
+        width: 100%;
+    }
+
+    .bar {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .bar button {
+        margin-top: 10px;
+    }
+
+    .bar label {
+        margin-bottom: 10px;
+    }
+
+    .presentation {
+        text-align: center;
+    }
+
+    .presentation h1 {
+        font-size: 24px;
+    }
+
+    .presentation p {
+        font-size: 14px;
+    }
+
+    .bar input,
+    .bar button {
+        padding: 5px;
+        margin-right: 10px;
+        border: 1px solid #575757;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.15s ease, color 0.3s ease;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -168,25 +239,29 @@
     </header>
 
     <section class="main">
-        <div class="bar">
-            <label for="input">Input</label>
-            <input type="text" id="data" placeholder="Enter a value">
-            <!-- pushback -->
-            <button id="pushback">Push Back</button>
-            <!-- pushfront -->
-            <button id="pushfront">Push Front</button>
-            <!-- popback -->
-            <button id="popback">Pop Back</button>
-            <!-- popfront -->
-            <button id="popfront">Pop Front</button>
-            <!-- search -->
-            <button id="search">Search</button>
-            <!-- delete -->
-            <button id="delete">Delete</button>
+        <div>
+            <div class="bar">
+                <label for="input">Input</label>
+                <input type="text" id="data" placeholder="Enter a value">
+                <!-- pushback -->
+                <button id="pushback">Push Back</button>
+                <!-- pushfront -->
+                <button id="pushfront">Push Front</button>
+                <!-- popback -->
+                <button id="popback">Pop Back</button>
+                <!-- popfront -->
+                <button id="popfront">Pop Front</button>
+                <!-- search -->
+                <button id="search">Search</button>
+                <!-- delete -->
+                <button id="delete">Delete</button>
+            </div>
+            <canvas id="canvas" width="1000" height="400"></canvas>
         </div>
-        <div class="instructions-set" id="instructions-set">
+        <div>    
+            <div class="instructions-set" id="instructions-set">
+            </div>
         </div>
-        <canvas id="canvas" width="1000" height="400"></canvas>
     </section>
 
     <section>
@@ -267,6 +342,21 @@
         });
 
 
+    </script>
+
+
+    <script>
+        const context = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            // Luego, aquí deberías volver a dibujar el contenido del canvas si es necesario.
+        }
+
+        // Llama a resizeCanvas() cuando la página se carga y cuando cambia el tamaño de la ventana.
+        window.addEventListener('load', resizeCanvas);
+        window.addEventListener('resize', resizeCanvas);
     </script>
 
 </body>
