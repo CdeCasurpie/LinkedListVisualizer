@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Linked List</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        header {
+            background-image: linear-gradient(74deg, #181818 0%, #1e1e28 74%);
+            color: #fff;
+        }
+
+        .presentation {
+            padding: 20px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .presentation h1 {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .bar {
+            background-color: #fff;
+            width: 100%;
+            margin-top: 20px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bar label {
+            margin-right: 10px;
+            color: #333;
+        }
+
+        .bar input {
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        .bar button {
+            padding: 5px;
+            margin-right: 10px;
+            background-color: #fff;
+            border: 1px solid #333;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .bar button:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .bar button:active {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .bar button:focus {
+            outline: none;
+        }
+
+        .bar button:disabled {
+            background-color: #ccc;
+            color: #fff;
+            cursor: not-allowed;
+        }
+
+        .main {
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            padding-right: 0px;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            flex-direction: column;
+            padding-right: 320px;
+        }
+
+        #canvas {
+            border: 1px solid #575757;
+            border-radius: 5px;
+        }
+
+        .main .instructions-set {
+            width: 300px;
+            height: 400px;
+            position: absolute;
+            right: 30px;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            overflow-x: hidden;
+
+            /* code style */
+            font-family: monospace;
+            font-size: 14px;
+            overflow-y: scroll;
+            background-color: #242323;
+
+            /* hide scroll bar */
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+
+        }
+
+        .main .instructions-set p {
+            /* code line style */
+            margin-bottom: 10px;
+            padding: 7px;
+            border-radius: 5px;
+            background-color: #2c2c2f;
+            color: #fff;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .main .instructions-set p:hover {
+            background-color: #353538;
+        }
+
+        /* los que tengan clase current */
+        .main .instructions-set p.current {
+            background-color: #434349;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        p.hide {
+            background: rgba(0,0,0,0);
+            color: rgba(0,0,0,0);
+            animation: hide 1s ease-in-out;
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+
+        @keyframes hide {
+            0% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="presentation">
+            <h1>Linked List</h1>
+            <p>Linked List is a data structure consisting of a group of nodes which together represent a sequence. Under the simplest form, each node is composed of a data and a reference (in other words, a link) to the next node in the sequence.</p>
+        </div>
+        
+    </header>
+
+    <section class="main">
+        <div class="bar">
+            <label for="input">Input</label>
+            <input type="text" id="data" placeholder="Enter a value">
+            <!-- pushback -->
+            <button id="pushback">Push Back</button>
+            <!-- pushfront -->
+            <button id="pushfront">Push Front</button>
+            <!-- popback -->
+            <button id="popback">Pop Back</button>
+            <!-- popfront -->
+            <button id="popfront">Pop Front</button>
+            <!-- search -->
+            <button id="search">Search</button>
+            <!-- delete -->
+            <button id="delete">Delete</button>
+        </div>
+        <div class="instructions-set" id="instructions-set">
+        </div>
+        <canvas id="canvas" width="1000" height="400"></canvas>
+    </section>
+
+    <section>
+    </section>
+
+    
+    <script>
+        const instructionSet = document.getElementById('instructions-set');
+
+        function actualizeCurrent(current){
+            const instructions = instructionSet.querySelectorAll('.instruction');
+            instructions.forEach(instruction => {
+                instruction.classList.remove('current');
+            });
+
+            instructions[current].classList.add('current');
+        }
+
+        function clearInstructionSet(){
+
+            const instructions = instructionSet.querySelectorAll('.instruction');
+            for (let i = 0; i < instructions.length; i++) {
+                setTimeout(() => {
+                    instructions[i].classList.add('hide');
+                }, i * 1000);
+            }
+
+            setTimeout(() => {
+                instructions.forEach(instruction => {
+                    instruction.remove();
+                });
+            }, instructions.length * 1000);
+        }
+    </script>
+
+    <script src="linkedlist.js"></script>
+    <script src="ll_visualizer.js"></script>
+    <script>
+        const pushback = document.getElementById('pushback');
+        const pushfront = document.getElementById('pushfront');
+        const popback = document.getElementById('popback');
+        const popfront = document.getElementById('popfront');
+        const search = document.getElementById('search');
+        const del = document.getElementById('delete');
+        const play = document.getElementById('play');
+        const pause = document.getElementById('pause');
+        const reset = document.getElementById('reset');
+        const delay = document.getElementById('delay');
+
+        pushback.addEventListener('click', () => {
+            //Solo si tiene 2 digitos
+            addNodeAtEnd();
+        });
+
+        pushfront.addEventListener('click', () => {
+            //Solo si tiene 2 digitos
+            addNodeAtBeginning();
+        });
+
+        popback.addEventListener('click', () => {
+            //Solo si tiene 2 digitos
+            removeNodeAtEnd();
+        });
+
+        popfront.addEventListener('click', () => {
+            //Solo si tiene 2 digitos
+            removeNodeAtBeginning();
+        });
+
+        search.addEventListener('click', () => {
+            //Solo si tiene 2 digitos
+            searchNode();
+        });
+
+        del.addEventListener('click', () => {
+            //Solo si tiene 2 digitos
+            deleteNode();
+        });
+
+
+    </script>
+
+</body>
+</html>
